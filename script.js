@@ -50,18 +50,19 @@ function openEnvelope() {
   if (hasOpened) return;
 
   hasOpened = true;
+
   introContent.classList.add("opening");
 
   setTimeout(() => {
     introContent.classList.add("zooming");
-  }, 980);
+  }, 1250);
 
   setTimeout(() => {
     intro.classList.add("hidden");
     page.classList.add("visible");
     document.body.classList.remove("locked");
     createSparkles();
-  }, 1700);
+  }, 1950);
 }
 
 function updateButtons() {
