@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Ti - Recuerdo Especial</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background:
+        radial-gradient(circle at 10% 75%, rgba(255, 214, 143, 0.95) 0 22px, transparent 24px),
+        radial-gradient(circle at 86% 39%, rgba(255, 242, 205, 0.95) 0 18px, transparent 20px),
+        radial-gradient(circle at 92% 56%, rgba(255, 255, 235, 0.95) 0 26px, transparent 29px),
+        radial-gradient(circle at 80% 8%, rgba(255, 245, 218, 0.9) 0 20px, transparent 22px),
+        linear-gradient(135deg, #3d2a1f, #9a6a43 52%, #c19b73);
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 32px 16px;
+      color: #282828;
+    }
+
+    .scene {
+      position: relative;
+      width: 100%;
+      max-width: 430px;
+      min-height: 860px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .top-text {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      z-index: 3;
+      padding-top: 8px;
+    }
+
+    .top-text .tag {
+      font-size: 22px;
+      letter-spacing: 4px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .top-text .tag span {
+      color: #ffc6d1;
+      margin-left: 10px;
+    }
+
+    .top-text .headline {
+      margin-top: 30px;
+      font-family: "Great Vibes", cursive;
+      font-size: 42px;
+      line-height: 1.1;
+      font-weight: 400;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .arrow {
+      position: absolute;
+      top: 236px;
+      left: -8px;
+      color: #ffc6d1;
+      font-size: 42px;
+      transform: rotate(-8deg);
+      z-index: 4;
+    }
+
+    .phone {
+      position: relative;
+      width: 350px;
+      height: 680px;
+      margin-top: 150px;
+      border-radius: 44px;
+      padding: 13px;
+      background: #0b0b0c;
+      box-shadow:
+        0 35px 70px rgba(0, 0, 0, 0.45),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+      z-index: 2;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 13px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 132px;
+      height: 31px;
+      background: #050505;
+      border-radius: 0 0 18px 18px;
+      z-index: 10;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: #fff7f5;
+      border-radius: 34px;
+      overflow: hidden;
+      position: relative;
+      padding: 70px 24px 22px;
+      text-align: center;
+    }
+
+    .phone-screen::after {
+      content: "";
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 4px;
+      border-radius: 10px;
+      background: #111;
+      opacity: 0.85;
+    }
+
+    .date {
+      position: absolute;
+      top: 25px;
+      right: 20px;
+      font-size: 9px;
+      color: #d8c7c3;
+    }
+
+    .script-small {
+      font-family: "Great Vibes", cursive;
+      color: #b95f76;
+      font-size: 32px;
+      font-weight: 400;
+    }
+
+    .script-main {
+      margin-top: 6px;
+      font-family: "Great Vibes", cursive;
+      color: #b5526b;
+      font-size: 45px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .message {
+      margin: 34px auto 18px;
+      font-size: 14px;
+      line-height: 1.75;
+      font-weight: 600;
+      color: #343434;
+      max-width: 280px;
+    }
+
+    .heart {
+      color: #c94b50;
+      font-size: 32px;
+      margin: 10px 0 22px;
+      animation: pulse 1.8s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.14);
+      }
+    }
+
+    .music-card {
+      width: 100%;
+      background: #c96368;
+      border-radius: 16px;
+      padding: 18px 22px;
+      color: #fff;
+      text-align: left;
+      box-shadow: 0 12px 25px rgba(177, 67, 74, 0.26);
+    }
+
+    .track-row {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .play-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #f8e2e2;
+      color: #222;
+      border: none;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-size: 14px;
+      transition: transform 0.2s ease;
+    }
+
+    .play-circle:hover {
+      transform: scale(1.05);
+    }
+
+    .song-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .song-artist {
+      font-size: 11px;
+      opacity: 0.75;
+      margin-top: 4px;
+    }
+
+    .progress {
+      margin-top: 14px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.45);
+      border-radius: 50px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .progress-fill {
+      width: 24%;
+      height: 100%;
+      background: #6c5958;
+      border-radius: inherit;
+      transition: width 0.3s ease;
+    }
+
+    .time-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      margin-top: 6px;
+      opacity: 0.85;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      margin-top: 8px;
+    }
+
+    .control-btn {
+      border: none;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+      font-size: 18px;
+      opacity: 0.88;
+    }
+
+    .pause-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      color: #c96368;
+      background: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .moments {
+      margin-top: 32px;
+    }
+
+    .moments h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #262626;
+    }
+
+    .moments h2 span {
+      color: #bd6072;
+      font-weight: 600;
+    }
+
+    .gallery {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+      filter: sepia(15%) saturate(85%) brightness(0.92);
+    }
+
+    .bottom-heart {
+      margin-top: 14px;
+      font-size: 30px;
+      color: #d05a5e;
+    }
+
+    .nfc-badge {
+      position: absolute;
+      right: -20px;
+      bottom: 30px;
+      width: 158px;
+      height: 158px;
+      border-radius: 50%;
+      background: #b6576e;
+      border: 3px solid rgba(255, 255, 255, 0.45);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.28);
+      z-index: 5;
+    }
+
+    .nfc-badge .small {
+      font-size: 17px;
+      letter-spacing: 2px;
+      font-weight: 500;
+    }
+
+    .nfc-badge .large {
+      margin-top: 4px;
+      font-size: 24px;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+
+    .nfc-icon {
+      margin-top: 10px;
+      font-size: 31px;
+      opacity: 0.95;
+    }
+
+    .floating-light {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 240, 195, 0.92);
+      filter: blur(1px);
+      animation: float 5s infinite ease-in-out alternate;
+      z-index: 1;
+    }
+
+    .light-1 {
+      width: 34px;
+      height: 34px;
+      left: -22px;
+      top: 360px;
+    }
+
+    .light-2 {
+      width: 42px;
+      height: 42px;
+      right: -10px;
+      top: 410px;
+      animation-delay: 0.8s;
+    }
+
+    .light-3 {
+      width: 26px;
+      height: 26px;
+      right: 48px;
+      top: 500px;
+      animation-delay: 1.4s;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(-18px);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .scene {
+        max-width: 360px;
+      }
+
+      .phone {
+        width: 320px;
+        height: 650px;
+      }
+
+      .phone-screen {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .top-text .tag {
+        font-size: 18px;
+      }
+
+      .top-text .headline {
+        font-size: 36px;
+      }
+
+      .script-main {
+        font-size: 40px;
+      }
+
+      .message {
+        font-size: 13px;
+      }
+
+      .gallery img {
+        height: 130px;
+      }
+
+      .nfc-badge {
+        width: 135px;
+        height: 135px;
+        right: -6px;
+        bottom: 25px;
+      }
+
+      .nfc-badge .small {
+        font-size: 14px;
+      }
+
+      .nfc-badge .large {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="scene">
+    <div class="floating-light light-1"></div>
+    <div class="floating-light light-2"></div>
+    <div class="floating-light light-3"></div>
+
+    <section class="top-text">
+      <div class="tag">CAJA INOLVIDABLE <span>♥</span></div>
+      <div class="headline">
+        Acerca tu móvil<br />
+        y descubre la magia
+      </div>
+    </section>
+
+    <div class="arrow">→</div>
+
+    <section class="phone">
+      <div class="phone-screen">
+        <div class="date">10:45</div>
+
+        <div class="script-small">Para ti♡</div>
+        <h1 class="script-main">Con todo mi amor</h1>
+
+        <p class="message">
+          Gracias por ser mi persona,<br />
+          por cada sonrisa, por cada momento<br />
+          y por elegirme siempre.<br />
+          Este es nuestro pedacito de historia.
+        </p>
+
+        <div class="heart">♥</div>
+
+        <article class="music-card">
+          <div class="track-row">
+            <button class="play-circle" id="mainPlayBtn" aria-label="Reproducir canción">▶</button>
+
+            <div>
+              <div class="song-title">Nuestra canción</div>
+              <div class="song-artist">Ed Sheeran — Perfect</div>
+            </div>
+          </div>
+
+          <div class="progress" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="time-row">
+            <span id="currentTime">0:45</span>
+            <span>4:23</span>
+          </div>
+
+          <div class="controls">
+            <button class="control-btn" aria-label="Anterior">◀</button>
+            <button class="pause-btn" id="pauseBtn" aria-label="Pausar">Ⅱ</button>
+            <button class="control-btn" aria-label="Siguiente">▶</button>
+          </div>
+        </article>
+
+        <section class="moments">
+          <h2>Nuestros <span>momentos</span></h2>
+
+          <div class="gallery">
+            <img
+              src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80"
+              alt="Pareja abrazándose en la playa"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=500&q=80"
+              alt="Pareja caminando junta"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=500&q=80"
+              alt="Pareja sonriendo"
+            />
+          </div>
+
+          <div class="bottom-heart">♥</div>
+        </section>
+      </div>
+    </section>
+
+    <aside class="nfc-badge">
+      <div>
+        <div class="small">CONTIENE</div>
+        <div class="large">CHIP NFC</div>
+        <div>♥</div>
+        <div class="nfc-icon">⌁▯⌁</div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const mainPlayBtn = document.getElementById("mainPlayBtn");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const progressBar = document.getElementById("progressBar");
+    const progressFill = document.getElementById("progressFill");
+    const currentTime = document.getElementById("currentTime");
+
+    let isPlaying = true;
+    let progress = 24;
+    let seconds = 45;
+
+    const totalSeconds = 263;
+
+    function formatTime(value) {
+      const minutes = Math.floor(value / 60);
+      const secs = value % 60;
+      return `${minutes}:${String(secs).padStart(2, "0")}`;
+    }
+
+    function updatePlayer() {
+      progressFill.style.width = `${progress}%`;
+      currentTime.textContent = formatTime(seconds);
+
+      mainPlayBtn.textContent = isPlaying ? "Ⅱ" : "▶";
+      pauseBtn.textContent = isPlaying ? "Ⅱ" : "▶";
+    }
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      updatePlayer();
+    }
+
+    mainPlayBtn.addEventListener("click", togglePlay);
+    pauseBtn.addEventListener("click", togglePlay);
+
+    progressBar.addEventListener("click", function (event) {
+      const rect = progressBar.getBoundingClientRect();
+      const clickX = event.clientX - rect.left;
+      progress = Math.round((clickX / rect.width) * 100);
+      seconds = Math.round((progress / 100) * totalSeconds);
+      updatePlayer();
+    });
+
+    setInterval(() => {
+      if (!isPlaying) return;
+
+      seconds += 1;
+
+      if (seconds > totalSeconds) {
+        seconds = 0;
+      }
+
+      progress = Math.round((seconds / totalSeconds) * 100);
+      updatePlayer();
+    }, 1000);
+
+    updatePlayer();
+  </script>
+</body>
+</html>
