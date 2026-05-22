@@ -6,547 +6,36 @@
 
   <title>Para Ti</title>
 
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap");
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --pink: #c95b72;
-      --dark-pink: #a9475d;
-      --soft-pink: #fff3f5;
-      --paper: #fffaf8;
-      --text: #2f2f2f;
-      --gold: #ffe7a4;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      min-height: 100vh;
-      font-family: "Poppins", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 18% 20%, rgba(255, 232, 175, 0.45), transparent 24%),
-        radial-gradient(circle at 85% 18%, rgba(255, 238, 190, 0.4), transparent 28%),
-        radial-gradient(circle at 16% 82%, rgba(255, 209, 155, 0.48), transparent 28%),
-        linear-gradient(135deg, #3f2a20, #936140 50%, #c29670);
-      overflow-x: hidden;
-    }
-
-    body.locked {
-      overflow: hidden;
-    }
-
-    .intro {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 24px;
-      background:
-        radial-gradient(circle at 18% 18%, rgba(255, 232, 175, 0.45), transparent 28%),
-        radial-gradient(circle at 86% 78%, rgba(255, 190, 205, 0.34), transparent 32%),
-        linear-gradient(135deg, #44291f, #9b6544 52%, #d8a37a);
-      transition: opacity 0.8s ease, visibility 0.8s ease;
-    }
-
-    .intro.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .intro-content {
-      width: 100%;
-      max-width: 520px;
-      text-align: center;
-      color: #fff;
-    }
-
-    .intro-title {
-      font-family: "Great Vibes", cursive;
-      font-size: clamp(48px, 13vw, 82px);
-      font-weight: 400;
-      margin-bottom: 12px;
-      text-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
-    }
-
-    .intro-subtitle {
-      font-size: clamp(15px, 4vw, 20px);
-      letter-spacing: 1px;
-      opacity: 0.92;
-      margin-bottom: 48px;
-    }
-
-    .envelope-stage {
-      position: relative;
-      width: min(360px, 86vw);
-      height: 250px;
-      margin: 0 auto;
-      perspective: 1200px;
-    }
-
-    .envelope-button {
-      position: absolute;
-      inset: 0;
-      border: 0;
-      background: transparent;
-      cursor: pointer;
-      transform-origin: center;
-      animation: floatEnvelope 2.8s ease-in-out infinite;
-    }
-
-    .envelope-button.opening {
-      animation: envelopeFinalZoom 1.15s ease 1.35s forwards;
-      pointer-events: none;
-    }
-
-    @keyframes floatEnvelope {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    @keyframes envelopeFinalZoom {
-      0% { transform: scale(1); opacity: 1; }
-      100% { transform: scale(3.4); opacity: 0; }
-    }
-
-    .envelope {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 210px;
-      border-radius: 22px;
-      filter: drop-shadow(0 32px 55px rgba(0, 0, 0, 0.28));
-    }
-
-    .envelope-back {
-      position: absolute;
-      inset: 0;
-      border-radius: 22px;
-      background: linear-gradient(145deg, #e98198, #bf4f69);
-      overflow: hidden;
-      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.18), inset 0 -18px 32px rgba(120, 30, 50, 0.14);
-    }
-
-    .envelope-back::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(35deg, transparent 49.6%, rgba(255, 255, 255, 0.24) 50%, transparent 50.4%),
-        linear-gradient(-35deg, transparent 49.6%, rgba(255, 255, 255, 0.24) 50%, transparent 50.4%);
-      background-size: 100% 100%;
-      opacity: 0.7;
-    }
-
-    .letter {
-      position: absolute;
-      left: 50%;
-      bottom: 34px;
-      width: 76%;
-      height: 138px;
-      transform: translateX(-50%) translateY(42px);
-      border-radius: 16px;
-      background: radial-gradient(circle at 18% 18%, rgba(255, 214, 221, 0.35), transparent 28%), #fffaf8;
-      color: var(--dark-pink);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Great Vibes", cursive;
-      font-size: 42px;
-      box-shadow: 0 12px 26px rgba(93, 25, 42, 0.18);
-      opacity: 0;
-      z-index: 2;
-      transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease;
-    }
-
-    .envelope-button.opening .letter {
-      opacity: 1;
-      transform: translateX(-50%) translateY(-122px);
-      transition-delay: 0.5s;
-    }
-
-    .envelope-front-left,
-    .envelope-front-right,
-    .envelope-front-bottom {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 210px;
-      border-radius: 22px;
-      pointer-events: none;
-      z-index: 4;
-    }
-
-    .envelope-front-left {
-      background: linear-gradient(135deg, #f39bae, #c75670);
-      clip-path: polygon(0 0, 50% 50%, 0 100%);
-    }
-
-    .envelope-front-right {
-      background: linear-gradient(225deg, #df6f8a, #b94862);
-      clip-path: polygon(100% 0, 50% 50%, 100% 100%);
-    }
-
-    .envelope-front-bottom {
-      background: linear-gradient(0deg, #c95673, #e37f99);
-      clip-path: polygon(0 100%, 50% 46%, 100% 100%);
-    }
-
-    .envelope-flap {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 122px;
-      background: linear-gradient(180deg, #ffc0cc, #d86580);
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-      border-radius: 22px 22px 0 0;
-      transform-origin: top center;
-      transform: rotateX(0deg);
-      z-index: 6;
-      transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
-      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.25);
-    }
-
-    .envelope-button.opening .envelope-flap {
-      transform: rotateX(180deg);
-    }
-
-    .heart-seal {
-      position: absolute;
-      left: 50%;
-      top: 96px;
-      transform: translateX(-50%);
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      z-index: 7;
-      display: grid;
-      place-items: center;
-      background: #fff0f3;
-      color: #b44d65;
-      font-size: 25px;
-      box-shadow: 0 10px 20px rgba(91, 24, 42, 0.18);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-
-    .envelope-button.opening .heart-seal {
-      opacity: 0;
-      transform: translateX(-50%) scale(0.4);
-    }
-
-    .tap-text {
-      margin-top: 48px;
-      font-size: 16px;
-      opacity: 0.92;
-      animation: blink 1.7s ease-in-out infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 0.45; }
-      50% { opacity: 1; }
-    }
-
-    .page {
-      min-height: 100vh;
-      opacity: 0;
-      transform: scale(0.97);
-      transition: opacity 0.9s ease, transform 0.9s ease;
-      padding: 26px 18px 70px;
-    }
-
-    .page.visible {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .romantic-card {
-      position: relative;
-      max-width: 760px;
-      margin: 0 auto;
-      background: rgba(255, 248, 245, 0.97);
-      border-radius: 34px;
-      padding: clamp(34px, 7vw, 58px);
-      text-align: center;
-      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.34), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-      overflow: hidden;
-    }
-
-    .romantic-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 12% 10%, rgba(255, 198, 209, 0.32), transparent 24%),
-        radial-gradient(circle at 88% 92%, rgba(201, 99, 120, 0.16), transparent 25%);
-      pointer-events: none;
-    }
-
-    .romantic-card > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .script-small {
-      font-family: "Great Vibes", cursive;
-      color: var(--dark-pink);
-      font-size: clamp(42px, 10vw, 66px);
-      font-weight: 400;
-    }
-
-    .script-main {
-      margin-top: 8px;
-      font-family: "Great Vibes", cursive;
-      color: #b5526b;
-      font-size: clamp(52px, 11vw, 82px);
-      font-weight: 400;
-      line-height: 1;
-    }
-
-    .message {
-      margin: 38px auto 20px;
-      font-size: clamp(16px, 4vw, 21px);
-      line-height: 1.85;
-      font-weight: 600;
-      color: #343434;
-      max-width: 620px;
-    }
-
-    .heart {
-      color: #c94b50;
-      font-size: 46px;
-      margin: 18px 0 32px;
-      animation: pulse 1.8s infinite ease-in-out;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.14); }
-    }
-
-    .music-card {
-      width: min(100%, 580px);
-      margin: 0 auto;
-      background: linear-gradient(145deg, #d2737b, #bd5361);
-      border-radius: 24px;
-      padding: 24px 26px;
-      color: #fff;
-      text-align: left;
-      box-shadow: 0 18px 35px rgba(177, 67, 74, 0.28);
-    }
-
-    .track-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .play-circle {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: #fff0f1;
-      color: #bd5361;
-      border: none;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      font-size: 18px;
-      font-weight: 700;
-      transition: transform 0.2s ease;
-    }
-
-    .play-circle:hover {
-      transform: scale(1.06);
-    }
-
-    .song-title {
-      font-size: clamp(21px, 5vw, 29px);
-      font-weight: 700;
-      line-height: 1.1;
-    }
-
-    .song-artist {
-      font-size: clamp(13px, 3.4vw, 17px);
-      opacity: 0.78;
-      margin-top: 5px;
-    }
-
-    .progress {
-      margin-top: 22px;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.45);
-      border-radius: 50px;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      background: #6c5958;
-      border-radius: inherit;
-      transition: width 0.15s linear;
-    }
-
-    .time-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      margin-top: 8px;
-      opacity: 0.9;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
-      margin-top: 16px;
-    }
-
-    .control-btn {
-      border: none;
-      background: transparent;
-      color: #fff;
-      cursor: pointer;
-      font-size: 21px;
-      opacity: 0.9;
-    }
-
-    .pause-btn {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: none;
-      color: #c96368;
-      background: #fff;
-      font-size: 20px;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 8px 18px rgba(120, 30, 45, 0.24);
-    }
-
-    .audio-help {
-      margin-top: 14px;
-      font-size: 12px;
-      line-height: 1.5;
-      opacity: 0.78;
-      text-align: center;
-    }
-
-    .moments {
-      margin-top: 48px;
-    }
-
-    .moments h2 {
-      font-size: clamp(30px, 7vw, 44px);
-      font-weight: 700;
-      color: #262626;
-    }
-
-    .moments h2 span {
-      color: #bd6072;
-      font-weight: 600;
-    }
-
-    .gallery {
-      margin-top: 26px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .gallery img {
-      width: 100%;
-      height: clamp(170px, 28vw, 260px);
-      object-fit: cover;
-      border-radius: 20px;
-      filter: sepia(15%) saturate(85%) brightness(0.92);
-      box-shadow: 0 14px 28px rgba(80, 38, 30, 0.18);
-      transition: transform 0.25s ease, filter 0.25s ease;
-    }
-
-    .gallery img:hover {
-      transform: translateY(-6px) scale(1.015);
-      filter: sepia(5%) saturate(100%) brightness(1);
-    }
-
-    .bottom-heart {
-      margin-top: 26px;
-      font-size: 40px;
-      color: #d05a5e;
-    }
-
-    .sparkle {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 235, 180, 0.9);
-      box-shadow: 0 0 18px rgba(255, 235, 180, 0.8);
-      pointer-events: none;
-      animation: sparkleMove 4s linear infinite;
-      z-index: 0;
-    }
-
-    @keyframes sparkleMove {
-      from { transform: translateY(0); opacity: 0; }
-      20% { opacity: 1; }
-      80% { opacity: 1; }
-      to { transform: translateY(-120px); opacity: 0; }
-    }
-
-    @media (max-width: 700px) {
-      .page { padding: 26px 14px 54px; }
-      .romantic-card { border-radius: 30px; padding: 38px 18px; }
-      .gallery { grid-template-columns: 1fr; }
-      .gallery img { height: 250px; }
-      .music-card { padding: 22px 18px; }
-      .intro-title { margin-top: -20px; }
-    }
-
-    @media (max-width: 390px) {
-      .envelope-stage { width: 310px; height: 230px; }
-      .envelope { height: 190px; }
-      .envelope-front-left, .envelope-front-right, .envelope-front-bottom { height: 190px; }
-      .envelope-flap { height: 112px; }
-      .letter { height: 124px; font-size: 36px; }
-    }
-  </style>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body class="locked">
   <section class="intro" id="intro">
-    <div class="intro-content">
-      <h1 class="intro-title">Una sorpresa para ti</h1>
-      <p class="intro-subtitle">Haz click en el sobre para abrirlo</p>
+    <div class="intro-content" id="introContent">
+      <div class="intro-copy">
+        <h1 class="intro-title">Una sorpresa para ti</h1>
+        <p class="intro-subtitle">Haz click en el sobre para abrirlo</p>
+      </div>
 
       <div class="envelope-stage">
         <button class="envelope-button" id="envelopeButton" aria-label="Abrir sobre">
-          <div class="envelope">
-            <div class="envelope-back"></div>
-            <div class="letter">Para ti ♥</div>
-            <div class="envelope-front-left"></div>
-            <div class="envelope-front-right"></div>
-            <div class="envelope-front-bottom"></div>
-            <div class="envelope-flap"></div>
-            <div class="heart-seal">♥</div>
+          <div class="envelope-shell">
+            <div class="env-back"></div>
+
+            <div class="letter">
+              Para ti ♥
+            </div>
+
+            <div class="env-pocket">
+              <div class="env-pocket-left"></div>
+              <div class="env-pocket-right"></div>
+              <div class="env-pocket-bottom"></div>
+            </div>
+
+            <div class="env-flap"></div>
+            <div class="seal">♥</div>
+
+            <div class="zoom-letter"></div>
           </div>
         </button>
       </div>
@@ -558,6 +47,7 @@
   <main class="page" id="page">
     <section class="romantic-card">
       <div class="script-small">Para ti♡</div>
+
       <h1 class="script-main">Con todo mi amor</h1>
 
       <p class="message">
@@ -574,6 +64,7 @@
 
         <div class="track-row">
           <button class="play-circle" id="mainPlayBtn" aria-label="Reproducir canción">▶</button>
+
           <div>
             <div class="song-title">Nuestra canción</div>
             <div class="song-artist">Ed Sheeran — Perfect</div>
@@ -596,139 +87,35 @@
         </div>
 
         <p class="audio-help" id="audioHelp">
-          Añade un archivo llamado <strong>perfect.mp3</strong> junto al index.html para que suene.
+          Añade un archivo llamado <strong>perfect.mp3</strong> junto al <strong>index.html</strong> para que suene.
         </p>
       </article>
 
       <section class="moments">
         <h2>Nuestros <span>momentos</span></h2>
+
         <div class="gallery">
-          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80" alt="Pareja abrazándose" />
-          <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80" alt="Pareja caminando junta" />
-          <img src="https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=900&q=80" alt="Pareja sonriendo" />
+          <img
+            src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80"
+            alt="Pareja abrazándose"
+          />
+
+          <img
+            src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80"
+            alt="Pareja caminando junta"
+          />
+
+          <img
+            src="https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=900&q=80"
+            alt="Pareja sonriendo"
+          />
         </div>
+
         <div class="bottom-heart">♥</div>
       </section>
     </section>
   </main>
 
-  <script>
-    const intro = document.getElementById("intro");
-    const page = document.getElementById("page");
-    const envelopeButton = document.getElementById("envelopeButton");
-    const audioPlayer = document.getElementById("audioPlayer");
-    const mainPlayBtn = document.getElementById("mainPlayBtn");
-    const pauseBtn = document.getElementById("pauseBtn");
-    const rewindBtn = document.getElementById("rewindBtn");
-    const forwardBtn = document.getElementById("forwardBtn");
-    const progressBar = document.getElementById("progressBar");
-    const progressFill = document.getElementById("progressFill");
-    const currentTime = document.getElementById("currentTime");
-    const durationTime = document.getElementById("durationTime");
-    const audioHelp = document.getElementById("audioHelp");
-
-    let hasOpened = false;
-
-    function openEnvelope() {
-      if (hasOpened) return;
-      hasOpened = true;
-      envelopeButton.classList.add("opening");
-      setTimeout(() => {
-        intro.classList.add("hidden");
-        page.classList.add("visible");
-        document.body.classList.remove("locked");
-        createSparkles();
-      }, 2350);
-    }
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60);
-      return `${minutes}:${String(seconds).padStart(2, "0")}`;
-    }
-
-    function updateButtons() {
-      const icon = audioPlayer.paused ? "▶" : "Ⅱ";
-      mainPlayBtn.textContent = icon;
-      pauseBtn.textContent = icon;
-      mainPlayBtn.setAttribute("aria-label", audioPlayer.paused ? "Reproducir canción" : "Pausar canción");
-      pauseBtn.setAttribute("aria-label", audioPlayer.paused ? "Reproducir" : "Pausar");
-    }
-
-    async function toggleAudio() {
-      try {
-        if (audioPlayer.paused) {
-          await audioPlayer.play();
-          audioHelp.textContent = "";
-        } else {
-          audioPlayer.pause();
-        }
-        updateButtons();
-      } catch (error) {
-        audioHelp.innerHTML = "No se puede reproducir todavía. Comprueba que existe el archivo <strong>perfect.mp3</strong> en el repo.";
-      }
-    }
-
-    function updateProgress() {
-      const duration = audioPlayer.duration || 0;
-      const current = audioPlayer.currentTime || 0;
-      const percent = duration > 0 ? (current / duration) * 100 : 0;
-      progressFill.style.width = `${percent}%`;
-      currentTime.textContent = formatTime(current);
-      durationTime.textContent = formatTime(duration);
-    }
-
-    function seekAudio(event) {
-      const duration = audioPlayer.duration;
-      if (!Number.isFinite(duration) || duration <= 0) return;
-      const rect = progressBar.getBoundingClientRect();
-      const clickX = event.clientX - rect.left;
-      const percent = Math.min(Math.max(clickX / rect.width, 0), 1);
-      audioPlayer.currentTime = percent * duration;
-      updateProgress();
-    }
-
-    function skipAudio(seconds) {
-      const duration = audioPlayer.duration || 0;
-      const nextTime = audioPlayer.currentTime + seconds;
-      audioPlayer.currentTime = Math.min(Math.max(nextTime, 0), duration);
-      updateProgress();
-    }
-
-    function createSparkles() {
-      const totalSparkles = 24;
-      for (let i = 0; i < totalSparkles; i += 1) {
-        const sparkle = document.createElement("span");
-        sparkle.className = "sparkle";
-        sparkle.style.left = `${Math.random() * 100}%`;
-        sparkle.style.top = `${20 + Math.random() * 80}%`;
-        const size = 5 + Math.random() * 8;
-        sparkle.style.width = `${size}px`;
-        sparkle.style.height = `${size}px`;
-        sparkle.style.animationDelay = `${Math.random() * 4}s`;
-        sparkle.style.animationDuration = `${3 + Math.random() * 3}s`;
-        document.body.appendChild(sparkle);
-      }
-    }
-
-    envelopeButton.addEventListener("click", openEnvelope);
-    mainPlayBtn.addEventListener("click", toggleAudio);
-    pauseBtn.addEventListener("click", toggleAudio);
-    rewindBtn.addEventListener("click", () => skipAudio(-10));
-    forwardBtn.addEventListener("click", () => skipAudio(10));
-    progressBar.addEventListener("click", seekAudio);
-    audioPlayer.addEventListener("loadedmetadata", updateProgress);
-    audioPlayer.addEventListener("timeupdate", updateProgress);
-    audioPlayer.addEventListener("play", updateButtons);
-    audioPlayer.addEventListener("pause", updateButtons);
-    audioPlayer.addEventListener("ended", updateButtons);
-    audioPlayer.addEventListener("error", () => {
-      audioHelp.innerHTML = "No encuentro el audio. Sube un archivo llamado <strong>perfect.mp3</strong> al mismo sitio que el index.html.";
-    });
-
-    updateButtons();
-    updateProgress();
-  </script>
+  <script src="./script.js"></script>
 </body>
 </html>
